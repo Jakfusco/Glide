@@ -155,7 +155,7 @@ MonoBehaviour:
     type: 3}
   numberToSpawn: 1
   limit: 20
-  rate: 0.1
+  rate: 1
 --- !u!4 &41903112
 Transform:
   m_ObjectHideFlags: 0
