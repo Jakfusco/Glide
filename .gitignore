@@ -35,3 +35,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Glide/Glide/Assets/Resources/ONSPSettings.asset.meta
+*.meta
+*.meta
