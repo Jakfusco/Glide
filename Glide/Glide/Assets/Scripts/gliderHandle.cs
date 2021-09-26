@@ -10,7 +10,7 @@ public class gliderHandle : OVRGrabbable
     CharacterController controller;
     OVRPlayerController VRcontroller;
     OVRGrabber currentHand;
-    float flDefaultGravity, flOriginalXRot;
+    float flDefaultGravity, flOriginalXRot, flOriginalYRot;
     public float flSpeedMultiplier = 1.0f;
     protected override void Start()
     {
@@ -30,6 +30,7 @@ public class gliderHandle : OVRGrabbable
         player.transform.SetParent(parent.transform);
         transform.parent = parent.transform;
         flOriginalXRot = currentHand.gameObject.transform.rotation.x;
+        flOriginalYRot = currentHand.gameObject.transform.rotation.y;
     }
 
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
@@ -48,8 +49,9 @@ public class gliderHandle : OVRGrabbable
         if (bGrabbed)
         {
             float flNewRot = currentHand.gameObject.transform.rotation.x - flOriginalXRot;
+            float flNewRotY = currentHand.gameObject.transform.rotation.y - flOriginalYRot;
             parent.transform.Translate(0.0f, 0.0f, 0.06f* flSpeedMultiplier, Space.Self);
-            parent.transform.rotation = new Quaternion(flNewRot, 0.0f, 0.0f, 1.5f);
+            parent.transform.localRotation = new Quaternion(flNewRot, flNewRotY, 0.0f, 1.5f);
         }
         if (transform.parent != parent.transform)
         {
