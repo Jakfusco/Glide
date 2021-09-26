@@ -12,6 +12,7 @@ public class gliderHandle : OVRGrabbable
     OVRGrabber currentHand;
     float flDefaultGravity, flOriginalXRot, flOriginalYRot;
     public float flSpeedMultiplier = 1.0f;
+    public float flQuaternion = 2.0f;
     protected override void Start()
     {
         base.Start();
@@ -51,7 +52,7 @@ public class gliderHandle : OVRGrabbable
             float flNewRot = currentHand.gameObject.transform.rotation.x - flOriginalXRot;
             float flNewRotY = currentHand.gameObject.transform.rotation.y - flOriginalYRot;
             parent.transform.Translate(0.0f, 0.0f, 0.06f* flSpeedMultiplier, Space.Self);
-            parent.transform.localRotation = new Quaternion(flNewRot, flNewRotY, 0.0f, 1.5f);
+            parent.transform.localRotation = Quaternion.Lerp(parent.transform.localRotation, new Quaternion(flNewRot, flNewRotY, 0.0f, 1.5f), Time.deltaTime * flQuaternion);
         }
         if (transform.parent != parent.transform)
         {
@@ -63,3 +64,4 @@ public class gliderHandle : OVRGrabbable
         }
     }
 }
+
