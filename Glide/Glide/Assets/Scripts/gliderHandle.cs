@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +10,8 @@ public class gliderHandle : OVRGrabbable
     CharacterController controller;
     OVRPlayerController VRcontroller;
     OVRGrabber currentHand;
-    public Transform camOriginalPos;
-    float flDefaultGravity, flSpeed, flOriginalXRot;
+    float flDefaultGravity, flOriginalXRot;
+    public float flSpeedMultiplier = 1.0f;
     protected override void Start()
     {
         base.Start();
@@ -30,7 +30,6 @@ public class gliderHandle : OVRGrabbable
         player.transform.SetParent(parent.transform);
         transform.parent = parent.transform;
         flOriginalXRot = currentHand.gameObject.transform.rotation.x;
-        player.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
 
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
@@ -42,7 +41,6 @@ public class gliderHandle : OVRGrabbable
         controller.velocity.Set(0.0f, 0.0f, 0.0f);
         player.transform.SetParent(null);
         transform.parent = parent.transform;
-        player.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
 
     void Update()
@@ -50,7 +48,6 @@ public class gliderHandle : OVRGrabbable
         if (bGrabbed)
         {
             float flNewRot = currentHand.gameObject.transform.rotation.x - flOriginalXRot;
-            float flSpeedMultiplier = 1.0f; //Mostly adjust this value for the gliding speed, although in fairness you could also touch the 0.06f
             parent.transform.Translate(0.0f, 0.0f, 0.06f* flSpeedMultiplier, Space.Self);
             parent.transform.rotation = new Quaternion(flNewRot, 0.0f, 0.0f, 1.5f);
         }
